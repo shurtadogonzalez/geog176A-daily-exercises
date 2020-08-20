@@ -1,0 +1,61 @@
+---
+title: "Exercise 05"
+author: Stephanie Hurtado
+output: html_document
+---
+
+library(tidyverse)
+
+url = 'https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-counties.csv' 
+
+covid = read_csv(url)
+
+head(covid, 5)
+
+## Question 1
+
+```{r}
+
+covid %>%
+  filter(date == max(date)) %>%
+  arrange(-cases) %>%
+  select(county, state, cases) %>%
+  head(5)
+```
+
+```{r}
+## Question 2
+
+covid %>%
+  filter(date == max(date)) %>%
+  group_by(state) %>%
+  summarize(cases = sum(cases, na.rm = TRUE)) %>%
+  ungroup() %>%
+  slice_max(cases, n = 5)
+```
+
+```{r}
+## Question 3
+
+covid %>%
+  filter(date == max(date), cases > 1000, county != "Unknown") %>%
+  mutate(ratio = 100 * (deaths/cases)) %>%
+  slice_max(ratio, n = 5) %>%
+  pull(county, state)
+```
+
+```{r message=FALSE, warning=FALSE}
+
+## Question 4 
+
+covid %>%
+  filter(date == max(date)) %>%
+  group_by(state) %>%
+  summarize(total_cases = sum(cases), total_deaths = sum(deaths)) %>%
+  ungroup() %>%
+  mutate(ratio = 100 * (total_deaths/total_cases)) %>%
+  slice_max(ratio, n = 5) %>%
+  pull(ratio, state)
+```
+ 
+ 
