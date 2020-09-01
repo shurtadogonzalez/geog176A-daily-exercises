@@ -1,0 +1,25 @@
+---
+title: "Geography 176A"
+author: "[Stephanie Hurtado] (https://github.com/shurtadogonzalez/shurtadogonzalez.github.io)"
+subtitle: 'Daily Exercise 16'
+output:
+  html_document:
+    theme: journal
+---
+
+```{r message=FALSE, warning=FALSE}
+library(tidyverse)
+library(sf)
+library(leaflet)
+library(USAboundaries)
+library(dplyr)
+```
+
+#Add at least one feature (table, inset map, custom marker/popup)
+
+
+```{r}
+leaflet() %>%  
+  addProviderTiles(providers$Esri.WorldImagery) %>% 
+  addMarkers(lng=-119.8489, lat=34.4140, popup="UCSB") 
+```
